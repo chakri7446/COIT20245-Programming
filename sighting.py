@@ -1,4 +1,4 @@
-def display_menu():
+def display_menu(): 
     print("Help")
     print("===")
     print("The following commands are recognised.")
