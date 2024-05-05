@@ -34,3 +34,35 @@ def main():
             display_menu()
 
 def search_species(city):
+ output= [ {"Species":{"AcceptedCommonName":"dolphin", "PestStatus":"Nil"}}, {"Species":{"AcceptedCommonName":"snake","PestStatus":"Venomous"}} ]
+    
+    return output
+
+def display_species(species_list):
+    index = 1
+    for species in species_list:
+        common_name = species["Species"]["AcceptedCommonName"]
+        pest_status = species["Species"]["PestStatus"]
+        print(f"Species {index}:")
+        print(f"  Accepted Common Name: {common_name}")
+        print(f"  Pest Status: {pest_status}")
+        print()
+        index += 1
+
+
+def search_sightings(taxonid,city):
+    sightings = [{"properties":{"StartDate":"1999-11-15","LocalityDetails":"Tinaroo"}}]
+    return sightings
+    
+
+def display_sightings(sightings):
+    for sighting in sightings:
+        print(f"Date: {sighting['properties']['StartDate']}")
+        print(f"Location: {sighting['properties']['LocalityDetails']}")
+        print("------------------------\n")
+
+# filter_venomous method 
+def filter_venomous(species_list):
+    return [specie for specie in species_list if specie['Species']['PestStatus'] == "Venomous"]
+
+main()
