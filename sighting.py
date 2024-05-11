@@ -1,67 +1,97 @@
-def display_menu(): 
+def display_menu():
+    """
+    Display the menu options.
+    """
     print("Help")
-    print("===")
-    print("The following commands are recognised.")
-    #Formatiing the menu to show align
-    print('Display help {:>20}  wildlife> help'.format(''))
-    print('Display animal species in a city   wildlife> species Cairns')
-    print('Display venonmous species wildlife> species Cairns venomous')
-    print('Display animal sightings in a city wildlife> sightings Cairns 1039')
-    print('Exit the application {:>12}  wildlife> exit\n'.format(''))
-
+    print("====")
+    print("The following commands are recognized.")
+    print("Display help: wildlife> help")
+    print("Exit the application: wildlife> exit")
+    print("Display animal species in a city: wildlife> species [city]")
+    print("Display animal sightings in a city: wildlife> sightings [city] [species]")
+    print("Display venomous animal sightings in a city: wildlife> venomous [city]")
 
 def main():
+    """
+    Main function to handle user input.
+    """
     display_menu()
-    while(True):
-        comm = input().split(' ')
-        print("\n")
-        if(comm[0]=="exit"):
-            exit(0)
-        elif(comm[0]=="help"):
+    while True:
+        user_input = input("wildlife> ").strip().lower().split()
+        command = user_input[0]
+        if command == "help":
             display_menu()
-        elif(comm[0]=="species"):
-            
-            if len(comm)>2:
-                display_species(filter_venomous(search_species(comm[1])))
+        elif command == "exit":
+            print("Exiting the program...")
+            break
+        elif command == "species":
+            if len(user_input) == 2:
+                city = user_input[1]
+                search_species(city)
             else:
-                display_species(search_species(comm[1]))
-            
-        elif(comm[0]=="sightings"):
-            display_sightings(search_sightings(comm[2],comm[1]))
+                print("Invalid command. Usage: wildlife> species [city]")
+        elif command == "sightings":
+            if len(user_input) == 3:
+                city = user_input[1]
+                species = user_input[2]
+                search_sightings(species, city)
+            else:
+                print("Invalid command. Usage: wildlife> sightings [city] [species]")
+        elif command == "venomous":
+            if len(user_input) == 2:
+                city = user_input[1]
+                list_venomous_species(city)
+            else:
+                print("Invalid command. Usage: wildlife> venomous [city]")
         else:
-            print("ERROR: Unrecognized Command. Please check and try again.")
-            display_menu()
+            print("Invalid command. Type 'help' for available commands.")
 
 def search_species(city):
- output= [ {"Species":{"AcceptedCommonName":"dolphin", "PestStatus":"Nil"}}, {"Species":{"AcceptedCommonName":"snake","PestStatus":"Venomous"}} ]
-    
-    return output
+    """
+    Search and display animal species in a city.
+    """
+    # Stub function for now
+    species_list = [
+        {"Species": {"AcceptedCommonName": "dolphin", "PestStatus": "Nil"}},
+        {"Species": {"AcceptedCommonName": "snake", "PestStatus": "Venomous"}}
+    ]
+    display_species(species_list)
 
 def display_species(species_list):
-    index = 1
+    """
+    Display the list of species.
+    """
     for species in species_list:
-        common_name = species["Species"]["AcceptedCommonName"]
-        pest_status = species["Species"]["PestStatus"]
-        print(f"Species {index}:")
-        print(f"  Accepted Common Name: {common_name}")
-        print(f"  Pest Status: {pest_status}")
-        print()
-        index += 1
+        name = species["Species"]["AcceptedCommonName"]
+        print(name)
 
-
-def search_sightings(taxonid,city):
-    sightings = [{"properties":{"StartDate":"1999-11-15","LocalityDetails":"Tinaroo"}}]
-    return sightings
-    
+def search_sightings(species, city):
+    """
+    Search and display animal sightings for a species in a city.
+    """
+    # Stub function for now
+    sightings = [{"properties": {"StartDate": "1999-11-15", "LocalityDetails": "Tinaroo"}}]
+    display_sightings(sightings)
 
 def display_sightings(sightings):
+    """
+    Display the list of sightings.
+    """
     for sighting in sightings:
-        print(f"Date: {sighting['properties']['StartDate']}")
-        print(f"Location: {sighting['properties']['LocalityDetails']}")
-        print("------------------------\n")
+        date = sighting["properties"]["StartDate"]
+        location = sighting["properties"]["LocalityDetails"]
+        print(f"Date: {date}, Location: {location}")
 
-# filter_venomous method 
-def filter_venomous(species_list):
-    return [specie for specie in species_list if specie['Species']['PestStatus'] == "Venomous"]
+def list_venomous_species(city):
+    """
+    List and display venomous animal species in a city.
+    """
+    # Stub function for now
+    venomous_species = [
+        {"Species": {"AcceptedCommonName": "snake", "PestStatus": "Venomous"}}
+    ]
+    display_species(venomous_species)
 
-main()
+if __name__ == "__main__":
+    main()
+
